@@ -82,6 +82,7 @@ function Index() {
                             component={EmployeeRecords}
                             path="/employee"
                         />
+                        <Route component={Login} path="/" />
                     </Switch>
                 </BrowserRouter>
             </SnackbarProvider>
