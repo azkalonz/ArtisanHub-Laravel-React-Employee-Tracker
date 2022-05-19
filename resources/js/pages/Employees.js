@@ -511,6 +511,7 @@ function Employees() {
                 isLoading={isLoading}
                 options={{
                     filtering: true,
+                    pagesize: 10,
                 }}
                 onRowClick={(e, data) => {
                     setSelectedEmployee(data);
