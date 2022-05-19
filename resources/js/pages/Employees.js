@@ -29,6 +29,7 @@ function Employees() {
     const [departments, setDepartments] = useState({});
     const [shiftSchedules, setShiftSchedules] = useState({});
     const [hybridSchedules, setHybridSchedules] = useState({});
+    const [attendanceBonus, setAttendanceBonus] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [selectedEmployee, setSelectedEmployee] = useState();
     const [isSaving, setIsSaving] = useState(false);
@@ -101,10 +102,12 @@ function Employees() {
                 const team = await axios.get("list/teams");
                 const sched = await axios.get("list/shift-schedules");
                 const hybrid = await axios.get("list/hybrid-schedules");
+                const bonus = await axios.get("list/attendance-bonus");
                 const s = {};
                 const d = {};
                 const t = {};
                 const h = {};
+                const b = {};
                 if (dep?.data) {
                     dep.data.forEach((dd) => {
                         d[dd.id] = dd.name;
@@ -125,10 +128,16 @@ function Employees() {
                         h[dd.id] = dd.name;
                     });
                 }
+                if (bonus?.data) {
+                    bonus.data.forEach((dd) => {
+                        b[dd.id] = dd.amount;
+                    });
+                }
                 setTeams(t);
                 setDepartments(d);
                 setShiftSchedules(s);
                 setHybridSchedules(h);
+                setAttendanceBonus(b);
                 if (data) {
                     setEmployees(data);
                 }
@@ -188,6 +197,24 @@ function Employees() {
                                         style={{ marginLeft: 10 }}
                                         defaultValue={selectedEmployee?.email}
                                     />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary="Role" />
+                                    <Select
+                                        onChange={(e) =>
+                                            setEmployeeState(
+                                                "role",
+                                                e.target.value
+                                            )
+                                        }
+                                        defaultValue={selectedEmployee?.role}
+                                    >
+                                        {["employee", "team lead"].map((id) => (
+                                            <MenuItem key={id} value={id}>
+                                                {id}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
                                 </ListItem>
                                 <ListItem>
                                     <ListItemText primary="Team" />
@@ -273,20 +300,25 @@ function Employees() {
                                 </ListItem>
                                 <ListItem>
                                     <ListItemText primary="Attendance Bonus" />
-                                    <Input
+                                    <Select
                                         onChange={(e) =>
                                             setEmployeeState(
-                                                "attendance_bonus",
+                                                "attendance_bonus_id",
                                                 e.target.value
                                             )
                                         }
-                                        style={{ marginLeft: 10 }}
                                         defaultValue={
-                                            selectedEmployee?.attendance_bonus ||
-                                            0
+                                            selectedEmployee?.attendance_bonus_id
                                         }
-                                        type="number"
-                                    />
+                                    >
+                                        {Object.keys(attendanceBonus).map(
+                                            (id) => (
+                                                <MenuItem key={id} value={id}>
+                                                    {attendanceBonus[id]}
+                                                </MenuItem>
+                                            )
+                                        )}
+                                    </Select>
                                 </ListItem>
                             </List>
                             <Typography variant="caption">Personal</Typography>

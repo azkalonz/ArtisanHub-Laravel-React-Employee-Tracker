@@ -46,31 +46,31 @@ export const MainListItems = () => {
                 </ListItemIcon>
                 <ListItemText primary="Teams" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => history.push("/shifts")}>
                 <ListItemIcon>
                     <CalendarMonth />
                 </ListItemIcon>
                 <ListItemText primary="Shift Schedules" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => history.push("/hybrid")}>
                 <ListItemIcon>
                     <EventNote />
                 </ListItemIcon>
                 <ListItemText primary="Hybrid Schedules" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => history.push("/hazard")}>
                 <ListItemIcon>
                     <Warning />
                 </ListItemIcon>
                 <ListItemText primary="Hazard Pay" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => history.push("/attendance-bonus")}>
                 <ListItemIcon>
                     <LocalAtm />
                 </ListItemIcon>
                 <ListItemText primary="Attendance Bonus" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => history.push("/pto")}>
                 <ListItemIcon>
                     <Bedtime />
                 </ListItemIcon>

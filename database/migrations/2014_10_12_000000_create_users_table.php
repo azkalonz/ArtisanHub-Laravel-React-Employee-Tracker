@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             $table->integer('department_id')->nullable();
             $table->integer('shift_schedule_id')->nullable();
             $table->integer('hybrid_schedule_id')->nullable();
-            $table->integer('attendance_bonus')->nullable();
+            $table->integer('attendance_bonus_id')->nullable();
             $table->integer('hazard_pay_id')->nullable();
 
             $table->softDeletes();

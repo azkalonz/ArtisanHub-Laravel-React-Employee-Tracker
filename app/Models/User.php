@@ -38,6 +38,7 @@ class User extends Authenticatable
         'hybrid_schedule_id',
         'attendance_bonus',
         'hazard_pay_id',
+        'role'
     ];
 
     /**
@@ -81,5 +82,9 @@ class User extends Authenticatable
 
     public function attendances(){
         return $this->hasMany(Attendance::class, 'employee_id', 'id');
+    }
+
+    public function bonus(){
+        return $this->hasOne(AttendanceBonus::class, 'id', 'attendance_bonus_id');
     }
 }
