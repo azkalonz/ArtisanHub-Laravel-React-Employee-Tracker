@@ -1,4 +1,3 @@
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -15,6 +14,8 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useHistory } from "react-router-dom";
+import Logo from "../img/logo.png";
+import Bg from "../img/bg.jpg";
 
 function Copyright(props) {
     return (
@@ -26,7 +27,7 @@ function Copyright(props) {
         >
             {"Copyright © "}
             <Link color="inherit" href="https://mui.com/">
-                Your Website
+                ArtisanHub
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}
@@ -91,8 +92,7 @@ export default function Login() {
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage:
-                            "url(https://source.unsplash.com/random)",
+                        backgroundImage: `url(${Bg})`,
                         backgroundRepeat: "no-repeat",
                         backgroundColor: (t) =>
                             t.palette.mode === "light"
@@ -118,11 +118,11 @@ export default function Login() {
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
+                            maxWidth: 360,
+                            margin: "40px auto",
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
+                        <img src={Logo} width="100" />
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>

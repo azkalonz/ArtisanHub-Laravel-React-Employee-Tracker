@@ -42,27 +42,44 @@ function EmployeeRecords(props) {
                         secondary="Lead"
                     />
                     <ListItemText
-                        primary={(() => {
-                            const bonus = userInfo.user.bonus?.amount || 0;
-                            const totalWorkingDays = records?.length || 1;
-                            const totalWorkingOnSite = (
-                                records?.filter((q) => !!q.is_onsite) || []
-                            ).length;
-                            return (
-                                (bonus / totalWorkingDays) * totalWorkingOnSite
-                            );
-                        })()}
+                        primary={
+                            "Php " +
+                            Math.round(
+                                (() => {
+                                    const bonus =
+                                        userInfo.user.bonus?.amount || 0;
+                                    const totalWorkingDays =
+                                        records?.length || 1;
+                                    const totalWorkingOnSite = (
+                                        records?.filter((q) => !!q.is_onsite) ||
+                                        []
+                                    ).length;
+                                    return (
+                                        (bonus / totalWorkingDays) *
+                                        totalWorkingOnSite
+                                    );
+                                })(),
+                                2
+                            )
+                        }
                         secondary="Accumulated Pro-Rated Attendance Bonus"
                     />
                     <ListItemText
-                        primary={(() => {
-                            const bonus =
-                                userInfo.user.hazard_pay?.payment || 0;
-                            const totalWorkingOnSite = (
-                                records?.filter((q) => !!q.is_onsite) || []
-                            ).length;
-                            return bonus * totalWorkingOnSite;
-                        })()}
+                        primary={
+                            "Php " +
+                            Math.round(
+                                (() => {
+                                    const bonus =
+                                        userInfo.user.hazard_pay?.payment || 0;
+                                    const totalWorkingOnSite = (
+                                        records?.filter((q) => !!q.is_onsite) ||
+                                        []
+                                    ).length;
+                                    return bonus * totalWorkingOnSite;
+                                })(),
+                                2
+                            )
+                        }
                         secondary="Accumulated Pro-Rated Hazard Pay"
                     />
                     <ListItemText

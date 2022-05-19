@@ -17,6 +17,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { MainListItems, SecondaryListItems } from "../components/listItems";
+import logo from "../img/logo-white.png";
 
 function Copyright(props) {
     return (
@@ -119,6 +120,14 @@ function DashboardContent(props) {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
+                            <img
+                                src={logo}
+                                width="50"
+                                style={{
+                                    marginBottom: -13,
+                                    marginRight: 12,
+                                }}
+                            />
                             ArtisanHub
                         </Typography>
                         <IconButton color="inherit">
