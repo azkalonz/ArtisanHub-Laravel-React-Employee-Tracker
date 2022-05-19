@@ -71,7 +71,7 @@ export default function Login() {
                 history.replace("/lead");
                 break;
             default:
-                history.replace("/");
+                history.replace("/employee");
         }
     };
 

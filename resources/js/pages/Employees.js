@@ -29,6 +29,7 @@ function Employees() {
     const [departments, setDepartments] = useState({});
     const [shiftSchedules, setShiftSchedules] = useState({});
     const [hybridSchedules, setHybridSchedules] = useState({});
+    const [hazardPay, setHazardPay] = useState({});
     const [attendanceBonus, setAttendanceBonus] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [selectedEmployee, setSelectedEmployee] = useState();
@@ -103,11 +104,13 @@ function Employees() {
                 const sched = await axios.get("list/shift-schedules");
                 const hybrid = await axios.get("list/hybrid-schedules");
                 const bonus = await axios.get("list/attendance-bonus");
+                const hazard = await axios.get("list/hazard-pays");
                 const s = {};
                 const d = {};
                 const t = {};
                 const h = {};
                 const b = {};
+                const hp = {};
                 if (dep?.data) {
                     dep.data.forEach((dd) => {
                         d[dd.id] = dd.name;
@@ -133,11 +136,17 @@ function Employees() {
                         b[dd.id] = dd.amount;
                     });
                 }
+                if (hazard?.data) {
+                    hazard.data.forEach((dd) => {
+                        hp[dd.id] = dd.payment;
+                    });
+                }
                 setTeams(t);
                 setDepartments(d);
                 setShiftSchedules(s);
                 setHybridSchedules(h);
                 setAttendanceBonus(b);
+                setHazardPay(hp);
                 if (data) {
                     setEmployees(data);
                 }
@@ -318,6 +327,26 @@ function Employees() {
                                                 </MenuItem>
                                             )
                                         )}
+                                    </Select>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText primary="Hazard Pay" />
+                                    <Select
+                                        onChange={(e) =>
+                                            setEmployeeState(
+                                                "hazard_pay_id",
+                                                e.target.value
+                                            )
+                                        }
+                                        defaultValue={
+                                            selectedEmployee?.hazard_pay_id
+                                        }
+                                    >
+                                        {Object.keys(hazardPay).map((id) => (
+                                            <MenuItem key={id} value={id}>
+                                                {hazardPay[id]}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </ListItem>
                             </List>

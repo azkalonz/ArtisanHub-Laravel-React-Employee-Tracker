@@ -27,7 +27,7 @@ class EmployeeController extends Controller
     }
 
     public function list(Request $request){
-        $users = User::with(['team', 'team.lead', 'department', 'shiftSchedule', 'hybridScheduleTeam', 'attendances', 'bonus']);
+        $users = User::with(['team', 'team.lead', 'department', 'shiftSchedule', 'hybridScheduleTeam', 'attendances', 'bonus', 'hazardPay']);
         $users->where('role','!=', 'admin');
         if(isset($request->team_id_filter)){
             $users = $users->where('team_id', '=', $request->team_id_filter);

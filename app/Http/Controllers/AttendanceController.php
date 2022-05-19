@@ -14,8 +14,12 @@ class AttendanceController extends Controller
         return AttendanceBonus::all();
     }
 
-    public function list(){
-        return Attendance::with(['employee', 'employee.team', 'employee.department', 'employee.shiftSchedule', 'employee.hybridScheduleTeam'])->get();
+    public function list(Request $request){
+        $attendance = Attendance::with(['employee', 'employee.team', 'employee.department', 'employee.shiftSchedule', 'employee.hybridScheduleTeam']);
+        if(isset($request->month)){
+            $attendance = $attendance->whereRaw('MONTH(created_at) = '.$request->month);
+        }
+        return $attendance->get();
     }
 
     public function export(){
@@ -70,6 +74,5 @@ class AttendanceController extends Controller
             'date_recorded' => date('Y-m-d'),
             'lead_id' => Auth::user()->id
         ]);
-
     }
 }

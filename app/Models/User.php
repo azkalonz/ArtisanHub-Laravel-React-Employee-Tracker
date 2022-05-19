@@ -37,6 +37,7 @@ class User extends Authenticatable
         'shift_schedule_id',
         'hybrid_schedule_id',
         'attendance_bonus',
+        'attendance_bonus_id',
         'hazard_pay_id',
         'role'
     ];

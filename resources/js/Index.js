@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import RoleRoute from "./components/RoleRoute";
 import AttendanceBonus from "./pages/AttendanceBonus";
 import Departments from "./pages/Departments";
+import EmployeeRecords from "./pages/EmployeeRecords";
 import Employees from "./pages/Employees";
 import HazardPays from "./pages/HazardPays";
 import HybridSchedules from "./pages/HybridSchedules";
@@ -74,6 +75,12 @@ function Index() {
                             role="team lead"
                             component={RecordAttendance}
                             path="/lead"
+                        />
+
+                        <RoleRoute
+                            role="employee"
+                            component={EmployeeRecords}
+                            path="/employee"
                         />
                     </Switch>
                 </BrowserRouter>

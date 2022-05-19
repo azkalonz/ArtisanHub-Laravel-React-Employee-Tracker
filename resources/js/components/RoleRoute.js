@@ -20,7 +20,7 @@ function RoleRoute(props) {
                             <props.component />
                         </Admin>
                     );
-                case "team lead":
+                default:
                     return (
                         <Lead>
                             <props.component />
