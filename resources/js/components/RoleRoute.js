@@ -5,19 +5,30 @@ import { Route } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Admin from "../pages/Admin";
 import axios from "../utils/axios";
+import Lead from "../pages/Lead";
 
 function RoleRoute(props) {
     const { userInfo } = useStoreState((states) => states.user);
     const rehydrated = useStoreRehydrated();
     const history = useHistory();
     const Component = React.useMemo(
-        () => () =>
-            (
-                <Admin>
-                    <props.component />
-                </Admin>
-            ),
-        [props.component]
+        () => () => {
+            switch (props.role) {
+                case "admin":
+                    return (
+                        <Admin>
+                            <props.component />
+                        </Admin>
+                    );
+                case "team lead":
+                    return (
+                        <Lead>
+                            <props.component />
+                        </Lead>
+                    );
+            }
+        },
+        [props.component, props.role]
     );
 
     useEffect(() => {

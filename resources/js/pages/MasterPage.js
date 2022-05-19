@@ -1,4 +1,4 @@
-import { Grid, Paper } from "@mui/material";
+import { Button, Grid, Paper } from "@mui/material";
 import { useStoreRehydrated } from "easy-peasy";
 import MaterialTable from "material-table";
 import { useEffect, useState } from "react";
@@ -6,7 +6,7 @@ import axios from "../utils/axios";
 
 function MasterPage() {
     const rehydrated = useStoreRehydrated();
-    const [employees, setEmployees] = useState();
+    const [records, setRecords] = useState();
     const [teams, setTeams] = useState({});
     const [departments, setDepartments] = useState({});
     const [shiftSchedules, setShiftSchedules] = useState({});
@@ -14,7 +14,7 @@ function MasterPage() {
 
     useEffect(() => {
         if (rehydrated) {
-            axios.get("list/employees").then(async ({ data }) => {
+            axios.get("list/attendance").then(async ({ data }) => {
                 const dep = await axios.get("list/departments");
                 const team = await axios.get("list/teams");
                 const sched = await axios.get("list/shift-schedules");
@@ -40,7 +40,18 @@ function MasterPage() {
                 setDepartments(d);
                 setShiftSchedules(s);
                 if (data) {
-                    setEmployees(data);
+                    setRecords(
+                        data.map((d) => ({
+                            ...d,
+                            department_id: d?.employee?.department?.id,
+                            team_id: d?.employee?.team?.id,
+                            shift_id: d?.employee?.shift_schedule?.id,
+                            employee_name:
+                                d?.employee.first_name +
+                                " " +
+                                d?.employee.last_name,
+                        }))
+                    );
                 }
                 setIsLoading(false);
             });
@@ -49,11 +60,28 @@ function MasterPage() {
 
     return (
         <Grid item xs={12} md={12} lg={12}>
+            <Button
+                onClick={() => {
+                    axios.get("attendance/export").then((resp) => {
+                        const rows = resp.data;
+                        let csvContent =
+                            "data:text/csv;charset=utf-8," +
+                            rows.map((e) => e.join(",")).join("\n");
+                        var encodedUri = encodeURI(csvContent);
+                        window.open(encodedUri);
+                    });
+                }}
+            >
+                Export
+            </Button>
             <MaterialTable
-                title="Employee Shifts"
-                data={employees}
+                title="Employee Reports"
+                data={records}
                 isLoading={isLoading}
-                editable={true}
+                options={{
+                    filtering: true,
+                    pageSize: 10,
+                }}
                 columns={[
                     {
                         title: "Department",
@@ -61,14 +89,13 @@ function MasterPage() {
                         lookup: departments,
                     },
                     {
-                        title: "Employee",
-                        field: "first_name",
-                        render: ({ first_name, last_name }) =>
-                            first_name + " " + last_name,
+                        title: "Employee Name",
+                        field: "employee_name",
                     },
+
                     {
                         title: "Shift Schedule",
-                        field: "shift_schedule_id",
+                        field: "shift_id",
                         lookup: shiftSchedules,
                     },
                     {
@@ -78,6 +105,17 @@ function MasterPage() {
                     },
                     {
                         title: "Work Type",
+                        field: "is_onsite",
+                        render: ({ is_onsite }) =>
+                            is_onsite ? "Onsite" : "WFH",
+                    },
+                    {
+                        title: "Remarks",
+                        field: "remarks",
+                    },
+                    {
+                        title: "Location",
+                        field: "location",
                     },
                 ]}
             />

@@ -31,7 +31,7 @@ function HybridSchedules() {
         if (!!!selectedItem) return;
         setIsSaving(true);
         axios
-            .post("update/employee/" + selectedItem.id, selectedItem)
+            .post("update/hybrid-schedule/" + selectedItem.id, selectedItem)
             .then(({ data }) => {
                 if (data?.id) {
                     const s = [...items];
@@ -46,7 +46,7 @@ function HybridSchedules() {
                 setIsSaving(false);
             })
             .catch(() => {
-                enqueueSnackbar("Duplicate/Invalid Email", {
+                enqueueSnackbar("Something went wrong!", {
                     type: "warning",
                 });
                 setIsSaving(false);
@@ -56,24 +56,26 @@ function HybridSchedules() {
     const deleteItem = useCallback(() => {
         if (!selectedItem?.id) return;
         setIsSaving(true);
-        axios.delete("delete/employee/" + selectedItem.id).then(({ data }) => {
-            if (data) {
-                const s = [...items];
-                const index = s.findIndex((q) => q.id === selectedItem.id);
-                if (index >= 0) {
-                    s.splice(index, 1);
-                }
-                enqueueSnackbar("Successfully deleted employee", {
-                    type: "success",
-                });
-                setItems(s);
-                setSelectedItem(null);
-            } else
-                enqueueSnackbar("Can't delete employee", {
-                    type: "warning",
-                });
-            setIsSaving(false);
-        });
+        axios
+            .delete("delete/hybrid-schedule/" + selectedItem.id)
+            .then(({ data }) => {
+                if (data) {
+                    const s = [...items];
+                    const index = s.findIndex((q) => q.id === selectedItem.id);
+                    if (index >= 0) {
+                        s.splice(index, 1);
+                    }
+                    enqueueSnackbar("Successfully deleted", {
+                        type: "success",
+                    });
+                    setItems(s);
+                    setSelectedItem(null);
+                } else
+                    enqueueSnackbar("Something went wrong!", {
+                        type: "warning",
+                    });
+                setIsSaving(false);
+            });
     }, [selectedItem, items]);
 
     const setItemState = (id, val) => {
@@ -113,125 +115,29 @@ function HybridSchedules() {
                     {isSaving && <CircularProgress />}
                     {!isSaving && (
                         <>
-                            <Typography variant="caption">Personal</Typography>
+                            <Typography variant="caption">Info</Typography>
                             <List>
                                 <ListItem>
-                                    <ListItemText primary="First Name" />
+                                    <ListItemText primary="Name" />
                                     <Input
                                         onChange={(e) =>
-                                            setItemState(
-                                                "first_name",
-                                                e.target.value
-                                            )
+                                            setItemState("name", e.target.value)
                                         }
                                         style={{ marginLeft: 10 }}
-                                        defaultValue={selectedItem?.first_name}
+                                        defaultValue={selectedItem?.name}
                                     />
                                 </ListItem>
                                 <ListItem>
-                                    <ListItemText primary="Middle Name" />
+                                    <ListItemText primary="Description" />
                                     <Input
                                         onChange={(e) =>
                                             setItemState(
-                                                "middle_name",
+                                                "description",
                                                 e.target.value
                                             )
                                         }
                                         style={{ marginLeft: 10 }}
-                                        defaultValue={selectedItem?.middle_name}
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText primary="Last Name" />
-                                    <Input
-                                        onChange={(e) =>
-                                            setItemState(
-                                                "last_name",
-                                                e.target.value
-                                            )
-                                        }
-                                        style={{ marginLeft: 10 }}
-                                        defaultValue={selectedItem?.last_name}
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText primary="Birthdate" />
-                                    <Input
-                                        onChange={(e) =>
-                                            setItemState(
-                                                "birthdate",
-                                                e.target.value
-                                            )
-                                        }
-                                        style={{ marginLeft: 10 }}
-                                        defaultValue={selectedItem?.birthdate}
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText primary="Gender" />
-                                    <Input
-                                        onChange={(e) =>
-                                            setItemState(
-                                                "gender",
-                                                e.target.value
-                                            )
-                                        }
-                                        style={{ marginLeft: 10 }}
-                                        defaultValue={selectedItem?.gender}
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText primary="Civil Status" />
-                                    <Input
-                                        onChange={(e) =>
-                                            setItemState(
-                                                "status",
-                                                e.target.value
-                                            )
-                                        }
-                                        style={{ marginLeft: 10 }}
-                                        defaultValue={selectedItem?.status}
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText primary="Address" />
-                                    <Input
-                                        onChange={(e) =>
-                                            setItemState(
-                                                "address",
-                                                e.target.value
-                                            )
-                                        }
-                                        style={{ marginLeft: 10 }}
-                                        defaultValue={selectedItem?.address}
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText primary="Mobile Number" />
-                                    <Input
-                                        onChange={(e) =>
-                                            setItemState(
-                                                "mobile_number",
-                                                e.target.value
-                                            )
-                                        }
-                                        style={{ marginLeft: 10 }}
-                                        defaultValue={
-                                            selectedItem?.mobile_number
-                                        }
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText primary="Designation" />
-                                    <Input
-                                        onChange={(e) =>
-                                            setItemState(
-                                                "designation",
-                                                e.target.value
-                                            )
-                                        }
-                                        style={{ marginLeft: 10 }}
-                                        defaultValue={selectedItem?.designation}
+                                        defaultValue={selectedItem?.description}
                                     />
                                 </ListItem>
                             </List>

@@ -19,7 +19,7 @@ class AuthController extends Controller
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
-        $user = User::where('email', $request->email)->first();
+        $user = User::with(['team','team.lead', 'department', 'shiftSchedule', 'hybridScheduleTeam', 'attendances', 'bonus'])->where('email', $request->email)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;

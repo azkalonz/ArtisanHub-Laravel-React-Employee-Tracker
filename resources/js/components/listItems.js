@@ -86,7 +86,12 @@ export const SecondaryListItems = () => {
             <ListSubheader component="div" inset>
                 Account
             </ListSubheader>
-            <ListItemButton>
+            <ListItemButton
+                onClick={() => {
+                    window.localStorage.clear();
+                    window.location = "/login";
+                }}
+            >
                 <ListItemIcon>
                     <Logout />
                 </ListItemIcon>

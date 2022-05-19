@@ -11,6 +11,8 @@ import HazardPays from "./pages/HazardPays";
 import HybridSchedules from "./pages/HybridSchedules";
 import Login from "./pages/Login";
 import MasterPage from "./pages/MasterPage";
+import PtoInfo from "./pages/PtoInfo";
+import RecordAttendance from "./pages/RecordAttendance";
 import ShiftSchedules from "./pages/ShiftSchedules";
 import Teams from "./pages/Teams";
 import store from "./redux/store";
@@ -61,6 +63,17 @@ function Index() {
                             role="admin"
                             component={AttendanceBonus}
                             path="/attendance-bonus"
+                        />
+                        <RoleRoute
+                            role="admin"
+                            component={PtoInfo}
+                            path="/pto"
+                        />
+
+                        <RoleRoute
+                            role="team lead"
+                            component={RecordAttendance}
+                            path="/lead"
                         />
                     </Switch>
                 </BrowserRouter>

@@ -55,13 +55,13 @@ class DatabaseSeeder extends Seeder
 
         Log::channel("stderr")->info('Pending: Seeding departments...');
         foreach($departments as $key => $department){
-            \App\Models\Department::create(array('name' => $department));
+            \App\Models\Department::create(array('name' => ucwords(strtolower($department))));
         }
         Log::channel("stderr")->info('Completed: Seeding departments...');
 
         Log::channel("stderr")->info('Pending: Seeding teams...');
         foreach($teams as $key => $team){
-            \App\Models\Team::create(array('name' => $team));
+            \App\Models\Team::create(array('name' => ucwords(strtolower($team))));
         }
         Log::channel("stderr")->info('Completed: Seeding teams...');
         
@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
             \App\Models\HybridScheduleTeam::create(
                 array(
                     'name' => $hybrid_schedule_team[0],
-                    'description' => $hybrid_schedule_team[1]
+                    'description' => ucwords(strtolower($hybrid_schedule_team[1]))
                 )
             );
         }

@@ -131,7 +131,7 @@ function Teams() {
                     {isSaving && <CircularProgress />}
                     {!isSaving && (
                         <>
-                            <Typography variant="caption">Personal</Typography>
+                            <Typography variant="caption">Info</Typography>
                             <List>
                                 <ListItem>
                                     <ListItemText primary="Team" />

@@ -28,7 +28,7 @@ function Copyright(props) {
         >
             {"Copyright © "}
             <Link color="inherit" href="https://mui.com/">
-                Your Website
+                ArtisanHub
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}
@@ -119,10 +119,10 @@ function DashboardContent(props) {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                            Dashboard
+                            ArtisanHub
                         </Typography>
                         <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
+                            <Badge color="secondary">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>

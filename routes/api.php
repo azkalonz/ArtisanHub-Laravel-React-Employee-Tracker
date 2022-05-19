@@ -25,6 +25,12 @@ use App\Http\Controllers\AttendanceController;
 */
 
 Route::group(['middleware'=>'auth:api'], function(){
+    Route::group(['prefix'=>'attendance'], function(){
+        Route::get('/check-submission', [AttendanceController::class, 'checkSubmission']);
+        Route::post('/record-submission', [AttendanceController::class, 'submitAttendanceReport']);
+        Route::get('/export', [AttendanceController::class, 'export']);
+    });
+    
     Route::group(['prefix'=>'list'], function(){
         Route::get('/employees', [EmployeeController::class, 'list']);
         Route::get('/employee-names', [EmployeeController::class, 'listNames']);
@@ -35,6 +41,7 @@ Route::group(['middleware'=>'auth:api'], function(){
         Route::get('/hazard-pays', [HazardPayController::class, 'list']);
         Route::get('/pto-info', [PtoInfoController::class, 'list']);
         Route::get('/attendance-bonus', [AttendanceController::class, 'listBonus']);
+        Route::get('/attendance', [AttendanceController::class, 'list']);
     });
 
     Route::group(['prefix'=>'update'], function(){
@@ -45,7 +52,7 @@ Route::group(['middleware'=>'auth:api'], function(){
         Route::post('/hybrid-schedule/{id}', [HybridScheduleTeamController::class, 'update']);
         Route::post('/hazard-pay/{id}', [HazardPayController::class, 'update']);
         Route::post('/pto-info/{id}', [PtoInfoController::class, 'update']);
-        Route::post('/attendance-bonus/{id}', [AttendanceController::class, 'update']);
+        Route::post('/attendance-bonus/{id}', [AttendanceController::class, 'updateBonus']);
     });
 
     Route::group(['prefix'=>'delete'], function(){
@@ -56,7 +63,7 @@ Route::group(['middleware'=>'auth:api'], function(){
         Route::delete('/hybrid-schedule/{id}', [HybridScheduleTeamController::class, 'delete']);
         Route::delete('/hazard-pay/{id}', [HazardPayController::class, 'delete']);
         Route::delete('/pto-info/{id}', [PtoInfoController::class, 'delete']);
-        Route::delete('/attendance-bonus/{id}', [AttendanceController::class, 'delete']);
+        Route::delete('/attendance-bonus/{id}', [AttendanceController::class, 'deleteBonus']);
     });
 });
 
